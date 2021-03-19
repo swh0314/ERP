@@ -31,7 +31,7 @@ public class Frame {
 		frame.setPreferredSize(new Dimension(840, 840/12*9));
 		frame.setSize(840, 840/12*9);
 		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
 
