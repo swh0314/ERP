@@ -1,6 +1,8 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class Member {
 	
@@ -102,19 +104,19 @@ public class Member {
 		}
 	}
 	
-	public static void createMember(String name, String birth, String gender, 
-			String phone, String work, String job,
-			String grade, String joinday) {
+	public static void createMember(String name, String birth, String gender, String phone, 
+			String work, String job, String grade, String joinday) {
 		try {
 			Connection con = getConnection();
 			PreparedStatement insert = con.prepareStatement(""
-					+ "INERT INTO member"
-					+ "(name, birth, gender, phone, work, job, grade, joinday) "
+					+ "INSERT INTO member"
+					+ " (name, birth, gender, phone, work, job, grade, joinday) "
 					+ "VALUE "
 					+ "('"+name+"', '"+birth+"', '"+gender+"', '"+phone+"', '"+work+"', '"+job+"', '"+grade+"', '"+joinday+"')"); // "를 통해 sql에 'String' 을 보낸다
 			insert.executeUpdate();
+			System.out.println("The data has been saved!");
 		} catch(Exception e) {
-			
+			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -124,14 +126,14 @@ public class Member {
 			
 			PreparedStatement createTable = con.prepareStatement(
 					"CREATE TABLE IF NOT EXISTS "
-					+ "member(id int NOT NULL, AUTO_INCREMENT,"
+					+ "member(id int NOT NULL AUTO_INCREMENT,"
 					+ "name varChar(15), "
 					+ "birth varChar(10), "
-					+ "gender varChar(1), "
+					+ "gender varChar(2), "
 					+ "phone varChar(15), "
 					+ "work varChar(20),"
 					+ "job varChar(10),"
-					+ "grade varChar(1),"
+					+ "grade varChar(2),"
 					+ "joinday varChar(10),"
 					+ "PRIMARY KEY(id))" ); //sql에 명령어 전달, PRIMARY KEY(id) id가 sql의 key value임 (id = null 절대 안됨)
 			createTable.execute(); //전달된 명령어를 실행하는 method .execute()
@@ -143,8 +145,31 @@ public class Member {
 		}
 	}
 	
-	public static void main(String[] args) {
-		createTable();
-		createMember("song", "981102", "w", "01012345678", "롯데정보통신", "연구원", "S", "210402");
+	public static ArrayList<String> getMembers(){
+		try { //sql의 commed를해서 data를 불러옴
+			Connection con = getConnection();
+			PreparedStatement statement = con.prepareStatement("Select name, birth, gender, phone FROM member");
+			ResultSet results = statement.executeQuery(); //query를 불러오기
+			ArrayList<String> list = new ArrayList<String>();
+			while(results.next()) {
+				list.add("Name :" + results.getString("name") + ", Birth :" + results.getString("birth") +
+						 ", Gender :" + results.getString("gender") + ", Phone :" + results.getString("phone"));
+			}
+			
+			System.out.println("The data has been fetched!");
+			return list;
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			return null;	
+		}
 	}
+	
+//	public static void main(String[] args) {
+//		createTable();
+//		createMember("song", "981102", "w", "01012345678", "lotte", "engineer", "S", "210402");
+//		ArrayList<String> list = getMembers();
+//		for(String item: list) {
+//			System.out.println(item);
+//		}
+//	}
 }
