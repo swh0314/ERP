@@ -14,6 +14,9 @@ import javax.swing.JTextField;
 import java.awt.FlowLayout;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
+import java.awt.Color;
+import javax.swing.JPasswordField;
 
 public class Pages {
 
@@ -24,6 +27,9 @@ public class Pages {
 	private JTextField txtPhone;
 	private JTable infoTable;
 	private JTextField txtSearch;
+	private JTextField txtJoinday;
+	private JTextField textField;
+	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -62,30 +68,37 @@ public class Pages {
 		layeredPane.setBounds(0, 0, 888, 663);
 		frame.getContentPane().add(layeredPane);
 		
-		JPanel listPanel = new JPanel();
-		listPanel.setBounds(150, 0, 735, 663);
-		layeredPane.add(listPanel);
-		listPanel.setLayout(null);
+		JPanel homePanel = new JPanel();
+		homePanel.setBounds(0, 0, 888, 663);
+		layeredPane.add(homePanel);
+		homePanel.setLayout(null);
 		
-		JLabel infoLabel2 = new JLabel("\uC778\uC0AC \uBAA9\uB85D");
-		infoLabel2.setBounds(130, 10, 450, 35);
-		infoLabel2.setHorizontalAlignment(JLabel.CENTER);
-		listPanel.add(infoLabel2);
+		JLabel lblNewLabel = new JLabel("\uC778\uC0AC \uAD00\uB9AC \uD504\uB85C\uADF8\uB7A8");
+		lblNewLabel.setFont(new Font("HY¿±¼­M", Font.BOLD, 70));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(115, 100, 650, 200);
+		homePanel.add(lblNewLabel);
 		
-		infoTable = new JTable();
-		infoTable.setBounds(30, 100, 690, 540);
-		listPanel.add(infoTable);
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setBounds(261, 346, 50, 15);
+		homePanel.add(lblNewLabel_1);
 		
-		txtSearch = new JTextField();
-		txtSearch.setBounds(30, 60, 630, 30);
-		txtSearch.setColumns(10);
-		txtSearch.setHorizontalAlignment(JTextField.CENTER);
-		listPanel.add(txtSearch);
+		JLabel lblNewLabel_2 = new JLabel("New label");
+		lblNewLabel_2.setBounds(261, 409, 50, 15);
+		homePanel.add(lblNewLabel_2);
 		
-		JLabel btnSearch = new JLabel("search");
-		btnSearch.setHorizontalAlignment(SwingConstants.CENTER);
-		btnSearch.setBounds(660, 60, 60, 30);
-		listPanel.add(btnSearch);
+		textField = new JTextField();
+		textField.setBounds(412, 343, 7, 21);
+		homePanel.add(textField);
+		textField.setColumns(10);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(412, 406, 7, 21);
+		homePanel.add(passwordField);
+		
+		JLabel lblNewLabel_3 = new JLabel("New label");
+		lblNewLabel_3.setBounds(390, 499, 50, 15);
+		homePanel.add(lblNewLabel_3);
 		
 		JPanel insertPanel = new JPanel();
 		insertPanel.setBounds(150, 0, 735, 663);
@@ -184,6 +197,79 @@ public class Pages {
 		btnSubmit.setBounds(100, 520, 500, 50);
 		insertPanel.add(btnSubmit);
 		
+		ButtonGroup btnGender = new ButtonGroup();
+		btnGender.add(genderMan);
+		btnGender.add(genderWoman);
+		
+		ButtonGroup btnGrade = new ButtonGroup();
+		btnGrade.add(gradeS);	
+		btnGrade.add(gradeA);
+		btnGrade.add(gradeB);	
+		btnGrade.add(gradeC);
+		btnGrade.add(gradeD);	
+		btnGrade.add(gradeF);
+		
+		JComboBox comboxWork = new JComboBox(new String[] {"Account", "R&D", "H&R", "Sales", "Marketing", "Manufacture"});
+		comboxWork.setBackground(Color.WHITE);
+		comboxWork.setBounds(113, 260, 150, 30);
+		insertPanel.add(comboxWork);
+		
+		JComboBox comboJob = new JComboBox(new String[] {"chief leader","leader", "follower", "part-time"});
+		comboJob.setBackground(Color.WHITE);
+		comboJob.setBounds(425, 260, 150, 30);
+		insertPanel.add(comboJob);
+		
+		JLabel joindayLabel = new JLabel("\uC785\uC0AC\uC77C : ");
+		joindayLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		joindayLabel.setBounds(12, 420, 100, 30);
+		insertPanel.add(joindayLabel);
+		
+		txtJoinday = new JTextField();
+		txtJoinday.setColumns(10);
+		txtJoinday.setBounds(113, 420, 140, 30);
+		insertPanel.add(txtJoinday);
+		
+		btnSubmit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String name = txtName.getText();
+				String birth = txtBirth.getText();
+				
+				String phone = txtPhone.getText();
+				
+				
+				
+				String joinday = txtJoinday.getText();
+			}
+			
+		});
+		
+		JPanel listPanel = new JPanel();
+		listPanel.setBounds(150, 0, 735, 663);
+		layeredPane.add(listPanel);
+		listPanel.setLayout(null);
+		
+		JLabel infoLabel2 = new JLabel("\uC778\uC0AC \uBAA9\uB85D");
+		infoLabel2.setBounds(130, 10, 450, 35);
+		infoLabel2.setHorizontalAlignment(JLabel.CENTER);
+		listPanel.add(infoLabel2);
+		
+		infoTable = new JTable();
+		infoTable.setBounds(30, 100, 690, 540);
+		listPanel.add(infoTable);
+		
+		txtSearch = new JTextField();
+		txtSearch.setBounds(30, 60, 630, 30);
+		txtSearch.setColumns(10);
+		txtSearch.setHorizontalAlignment(JTextField.CENTER);
+		listPanel.add(txtSearch);
+		
+		JLabel btnSearch = new JLabel("search");
+		btnSearch.setHorizontalAlignment(SwingConstants.CENTER);
+		btnSearch.setBounds(660, 60, 60, 30);
+		listPanel.add(btnSearch);
+		
 		JPanel btnPanel = new JPanel();
 		btnPanel.setBounds(0, 0, 150, 663);
 		layeredPane.add(btnPanel);
@@ -196,18 +282,6 @@ public class Pages {
 		JButton btnInsert = new JButton("Insert");
 		btnInsert.setBounds(12, 200, 125, 50);
 		btnPanel.add(btnInsert);
-		
-		ButtonGroup btnGender = new ButtonGroup();
-		btnGender.add(genderMan);
-		btnGender.add(genderWoman);
-		
-		ButtonGroup btnGrade = new ButtonGroup();
-		btnGrade.add(gradeS);	
-		btnGrade.add(gradeA);
-		btnGrade.add(gradeB);	
-		btnGrade.add(gradeC);
-		btnGrade.add(gradeD);	
-		btnGrade.add(gradeF);
 		
 		btnList.addActionListener(new ActionListener() {
 
@@ -225,15 +299,6 @@ public class Pages {
 			public void actionPerformed(ActionEvent e) {
 				listPanel.setVisible(false);
 				insertPanel.setVisible(true);
-			}
-			
-		});
-		
-		btnSubmit.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Member member = new Member(); 
 			}
 			
 		});
