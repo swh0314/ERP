@@ -13,6 +13,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import java.awt.FlowLayout;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 
 public class Pages {
 
@@ -61,6 +62,31 @@ public class Pages {
 		layeredPane.setBounds(0, 0, 888, 663);
 		frame.getContentPane().add(layeredPane);
 		
+		JPanel listPanel = new JPanel();
+		listPanel.setBounds(150, 0, 735, 663);
+		layeredPane.add(listPanel);
+		listPanel.setLayout(null);
+		
+		JLabel infoLabel2 = new JLabel("\uC778\uC0AC \uBAA9\uB85D");
+		infoLabel2.setBounds(130, 10, 450, 35);
+		infoLabel2.setHorizontalAlignment(JLabel.CENTER);
+		listPanel.add(infoLabel2);
+		
+		infoTable = new JTable();
+		infoTable.setBounds(30, 100, 690, 540);
+		listPanel.add(infoTable);
+		
+		txtSearch = new JTextField();
+		txtSearch.setBounds(30, 60, 630, 30);
+		txtSearch.setColumns(10);
+		txtSearch.setHorizontalAlignment(JTextField.CENTER);
+		listPanel.add(txtSearch);
+		
+		JLabel btnSearch = new JLabel("search");
+		btnSearch.setHorizontalAlignment(SwingConstants.CENTER);
+		btnSearch.setBounds(660, 60, 60, 30);
+		listPanel.add(btnSearch);
+		
 		JPanel insertPanel = new JPanel();
 		insertPanel.setBounds(150, 0, 735, 663);
 		layeredPane.add(insertPanel);
@@ -68,112 +94,95 @@ public class Pages {
 		
 		JLabel infoLabel = new JLabel("\uC778\uC0AC \uB4F1\uB85D");
 		infoLabel.setFont(new Font("HY±×·¡ÇÈM", Font.PLAIN, 30));
-		infoLabel.setBounds(121, 10, 508, 53);
+		infoLabel.setBounds(101, 10, 508, 53);
 		infoLabel.setHorizontalAlignment(JLabel.CENTER);
 		insertPanel.add(infoLabel);
 		
 		JLabel nameLabel = new JLabel("\uC774\uB984 : ");
 		nameLabel.setBounds(12, 100, 100, 30);
+		nameLabel.setHorizontalAlignment(JLabel.CENTER);
 		insertPanel.add(nameLabel);
 		
 		txtName = new JTextField();
-		txtName.setBounds(113, 100, 120, 30);
+		txtName.setBounds(113, 100, 140, 30);
 		insertPanel.add(txtName);
 		txtName.setColumns(10);
 		
 		JLabel birthLabel = new JLabel("\uC0DD\uB144\uC6D4\uC77C : ");
+		birthLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		birthLabel.setBounds(324, 100, 100, 30);
 		insertPanel.add(birthLabel);
 		
 		txtBirth = new JTextField();
 		txtBirth.setColumns(10);
-		txtBirth.setBounds(418, 100, 118, 30);
+		txtBirth.setBounds(425, 100, 140, 30);
 		insertPanel.add(txtBirth);
 		
 		JLabel genderLabel = new JLabel("\uC131\uBCC4 : ");
-		genderLabel.setBounds(12, 181, 84, 30);
+		genderLabel.setBounds(12, 180, 100, 30);
+		genderLabel.setHorizontalAlignment(JLabel.CENTER);
 		insertPanel.add(genderLabel);
 		
 		JRadioButton genderMan = new JRadioButton("\uB0A8");
-		genderMan.setBounds(113, 185, 49, 23);
+		genderMan.setBounds(113, 180, 49, 30);
 		insertPanel.add(genderMan);
 		
 		JRadioButton genderWoman = new JRadioButton("\uC5EC");
-		genderWoman.setBounds(166, 185, 39, 23);
+		genderWoman.setBounds(165, 180, 50, 30);
 		insertPanel.add(genderWoman);
 		
 		JLabel phoneLabel = new JLabel("\uC5F0\uB77D\uCC98 : ");
+		phoneLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		phoneLabel.setBounds(324, 181, 84, 30);
 		insertPanel.add(phoneLabel);
 		
 		txtPhone = new JTextField();
 		txtPhone.setColumns(10);
-		txtPhone.setBounds(420, 181, 118, 30);
+		txtPhone.setBounds(425, 180, 140, 30);
 		insertPanel.add(txtPhone);
 		
 		JLabel workLabel = new JLabel("\uBD80\uC11C : ");
-		workLabel.setBounds(12, 250, 84, 30);
+		workLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		workLabel.setBounds(12, 260, 100, 30);
 		insertPanel.add(workLabel);
 		
 		JLabel jobLabel = new JLabel("\uC9C1\uCC45 : ");
-		jobLabel.setBounds(324, 250, 84, 30);
+		jobLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		jobLabel.setBounds(324, 260, 100, 30);
 		insertPanel.add(jobLabel);
 		
 		JLabel gradeLabel = new JLabel("\uB4F1\uAE09 : ");
-		gradeLabel.setBounds(12, 363, 84, 30);
+		gradeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		gradeLabel.setBounds(12, 340, 100, 30);
 		insertPanel.add(gradeLabel);
 		
 		JRadioButton gradeS = new JRadioButton("S");
-		gradeS.setBounds(84, 367, 49, 23);
+		gradeS.setBounds(113, 340, 50, 30);
 		insertPanel.add(gradeS);
 		
 		JRadioButton gradeA = new JRadioButton("A");
-		gradeA.setBounds(131, 367, 39, 23);
+		gradeA.setBounds(163, 340, 50, 30);
 		insertPanel.add(gradeA);
 		
 		JRadioButton gradeB = new JRadioButton("B");
-		gradeB.setBounds(174, 367, 49, 23);
+		gradeB.setBounds(213, 340, 50, 30);
 		insertPanel.add(gradeB);
 		
 		JRadioButton gradeC = new JRadioButton("C");
-		gradeC.setBounds(227, 367, 39, 23);
+		gradeC.setBounds(263, 340, 50, 30);
 		insertPanel.add(gradeC);
 		
 		JRadioButton gradeD = new JRadioButton("D");
-		gradeD.setBounds(270, 367, 49, 23);
+		gradeD.setBounds(313, 340, 50, 30);
 		insertPanel.add(gradeD);
 		
 		JRadioButton gradeF = new JRadioButton("F");
-		gradeF.setBounds(317, 367, 39, 23);
+		gradeF.setBounds(363, 340, 50, 30);
 		insertPanel.add(gradeF);
 		
 		JButton btnSubmit = new JButton("Submit");
-		btnSubmit.setBounds(121, 567, 508, 43);
+		btnSubmit.setBounds(100, 520, 500, 50);
 		insertPanel.add(btnSubmit);
-		
-		JPanel listPanel = new JPanel();
-		listPanel.setBounds(150, 0, 735, 663);
-		layeredPane.add(listPanel);
-		listPanel.setLayout(null);
-		
-		JLabel infoLabel2 = new JLabel("\uC778\uC0AC \uBAA9\uB85D");
-		infoLabel2.setBounds(143, 10, 455, 68);
-		infoLabel2.setHorizontalAlignment(JLabel.CENTER);
-		listPanel.add(infoLabel2);
-		
-		infoTable = new JTable();
-		infoTable.setBounds(31, 97, 678, 541);
-		listPanel.add(infoTable);
-		
-		txtSearch = new JTextField();
-		txtSearch.setBounds(31, 57, 629, 30);
-		txtSearch.setColumns(10);
-		txtSearch.setHorizontalAlignment(JTextField.CENTER);
-		listPanel.add(txtSearch);
-		
-		JLabel btnSearch = new JLabel("search");
-		btnSearch.setBounds(659, 57, 64, 30);
-		listPanel.add(btnSearch);
 		
 		JPanel btnPanel = new JPanel();
 		btnPanel.setBounds(0, 0, 150, 663);
@@ -181,11 +190,11 @@ public class Pages {
 		btnPanel.setLayout(null);
 		
 		JButton btnList = new JButton("List");
-		btnList.setBounds(12, 128, 126, 50);
+		btnList.setBounds(12, 125, 125, 50);
 		btnPanel.add(btnList);
 		
 		JButton btnInsert = new JButton("Insert");
-		btnInsert.setBounds(12, 210, 126, 50);
+		btnInsert.setBounds(12, 200, 125, 50);
 		btnPanel.add(btnInsert);
 		
 		ButtonGroup btnGender = new ButtonGroup();
