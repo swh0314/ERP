@@ -1,89 +1,90 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
 public class Member {
 	
-	private String name;
-	private String sex;
-	private String birthDay;
-	private String phoneNumber;
-	private String workPlace;
-	private String job;
-	private String grade;
-	private String joinDay;
-	
-	public Member(String name, String sex, String birthDay, 
-			String phoneNumber, String workPlace, String job,
-			String grade, String joinDay) {
-		super();
-		this.name = name;
-		this.sex = sex;
-		this.birthDay = birthDay;
-		this.phoneNumber = phoneNumber;
-		this.workPlace = workPlace;
-		this.job = job;
-		this.grade = grade;
-		this.joinDay = joinDay;
-	}
-	
-	public Member() {
-		super();
-	}
-	
-	private String getName() {
-		return name;
-	}
-	private void setName(String name) {
-		this.name = name;
-	}
-	private String getSex() {
-		return sex;
-	}
-	private void setSex(String sex) {
-		this.sex = sex;
-	}
-	private String getBirthDay() {
-		return birthDay;
-	}
-	private void setBirthDay(String birthDay) {
-		this.birthDay = birthDay;
-	}
-	private String getPhoneNumber() {
-		return phoneNumber;
-	}
-	private void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-	private String getWorkPlace() {
-		return workPlace;
-	}
-	private void setWorkPlace(String workPlace) {
-		this.workPlace = workPlace;
-	}
-	private String getJob() {
-		return job;
-	}
-	private void setJob(String job) {
-		this.job = job;
-	}
-	private String getGrade() {
-		return grade;
-	}
-	private void setGrade(String grade) {
-		this.grade = grade;
-	}
-	private String getJoinDay() {
-		return joinDay;
-	}
-	private void setJoinDay(String joinDay) {
-		this.joinDay = joinDay;
-	}
-	
-	private void printMember(Member member) {
-		System.out.println(member.getName() + "/" + member.getSex() + "/" +
-				member.getBirthDay() + "/" + member.getPhoneNumber() + "/" + 
-				member.getWorkPlace() + "/" + member.getJob() + "/" + member.getJoinDay());
-	}
+//	private String name;
+//	private String birth;
+//	private String gender;
+//	private String phone;
+//	private String work;
+//	private String job;
+//	private String grade;
+//	private String join;
+//	
+//	public Member(String name, String birth, String gender, 
+//			String phone, String work, String job,
+//			String grade, String join) {
+//		super();
+//		this.name = name;
+//		this.birth = birth;
+//		this.gender = gender;
+//		this.phone = phone;
+//		this.work = work;
+//		this.job = job;
+//		this.grade = grade;
+//		this.join = join;
+//	}
+//	
+//	public Member() {
+//		super();
+//	}
+//	
+//	private String getName() {
+//		return name;
+//	}
+//	private void setName(String name) {
+//		this.name = name;
+//	}
+//	private String getGender() {
+//		return gender;
+//	}
+//	private void setGender(String gender) {
+//		this.gender = gender;
+//	}
+//	private String getBirth() {
+//		return birth;
+//	}
+//	private void setBirthDay(String birth) {
+//		this.birth = birth;
+//	}
+//	private String getPhone() {
+//		return phone;
+//	}
+//	private void setPhone(String phone) {
+//		this.phone= phone;
+//	}
+//	private String getWork() {
+//		return work;
+//	}
+//	private void setWork(String work) {
+//		this.work = work;
+//	}
+//	private String getJob() {
+//		return job;
+//	}
+//	private void setJob(String job) {
+//		this.job = job;
+//	}
+//	private String getGrade() {
+//		return grade;
+//	}
+//	private void setGrade(String grade) {
+//		this.grade = grade;
+//	}
+//	private String getJoin() {
+//		return join;
+//	}
+//	private void setJoin(String join) {
+//		this.join = join;
+//	}
+//	
+//	private void printMember(Member member) {
+//		System.out.println(member.getName() + "/" + member.getGender() + "/" +
+//				member.getBirth() + "/" + member.getPhone() + "/" + 
+//				member.getWork() + "/" + member.getJob() + "/" + member.getJoin());
+//	}
 	
 	public static Connection getConnection() {
 		try {
@@ -101,7 +102,49 @@ public class Member {
 		}
 	}
 	
+	public static void createMember(String name, String birth, String gender, 
+			String phone, String work, String job,
+			String grade, String joinday) {
+		try {
+			Connection con = getConnection();
+			PreparedStatement insert = con.prepareStatement(""
+					+ "INERT INTO member"
+					+ "(name, birth, gender, phone, work, job, grade, joinday) "
+					+ "VALUE "
+					+ "('"+name+"', '"+birth+"', '"+gender+"', '"+phone+"', '"+work+"', '"+job+"', '"+grade+"', '"+joinday+"')"); // "를 통해 sql에 'String' 을 보낸다
+			insert.executeUpdate();
+		} catch(Exception e) {
+			
+		}
+	}
+	
+	public static void createTable() {
+		try {
+			Connection con = getConnection(); //sql과 연결
+			
+			PreparedStatement createTable = con.prepareStatement(
+					"CREATE TABLE IF NOT EXISTS "
+					+ "member(id int NOT NULL, AUTO_INCREMENT,"
+					+ "name varChar(15), "
+					+ "birth varChar(10), "
+					+ "gender varChar(1), "
+					+ "phone varChar(15), "
+					+ "work varChar(20),"
+					+ "job varChar(10),"
+					+ "grade varChar(1),"
+					+ "joinday varChar(10),"
+					+ "PRIMARY KEY(id))" ); //sql에 명령어 전달, PRIMARY KEY(id) id가 sql의 key value임 (id = null 절대 안됨)
+			createTable.execute(); //전달된 명령어를 실행하는 method .execute()
+			
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			System.out.println("Table sucessfully created!");
+		}
+	}
+	
 	public static void main(String[] args) {
-		getConnection();
+		createTable();
+		createMember("song", "981102", "w", "01012345678", "롯데정보통신", "연구원", "S", "210402");
 	}
 }

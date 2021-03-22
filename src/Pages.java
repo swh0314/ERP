@@ -73,16 +73,16 @@ public class Pages {
 		insertPanel.add(infoLabel);
 		
 		JLabel nameLabel = new JLabel("\uC774\uB984 : ");
-		nameLabel.setBounds(12, 99, 84, 30);
+		nameLabel.setBounds(12, 100, 100, 30);
 		insertPanel.add(nameLabel);
 		
 		txtName = new JTextField();
-		txtName.setBounds(108, 99, 118, 30);
+		txtName.setBounds(113, 100, 120, 30);
 		insertPanel.add(txtName);
 		txtName.setColumns(10);
 		
 		JLabel birthLabel = new JLabel("\uC0DD\uB144\uC6D4\uC77C : ");
-		birthLabel.setBounds(324, 99, 95, 30);
+		birthLabel.setBounds(324, 100, 100, 30);
 		insertPanel.add(birthLabel);
 		
 		txtBirth = new JTextField();
@@ -90,17 +90,17 @@ public class Pages {
 		txtBirth.setBounds(418, 100, 118, 30);
 		insertPanel.add(txtBirth);
 		
-		JLabel sexLabel = new JLabel("\uC131\uBCC4 : ");
-		sexLabel.setBounds(12, 181, 84, 30);
-		insertPanel.add(sexLabel);
+		JLabel genderLabel = new JLabel("\uC131\uBCC4 : ");
+		genderLabel.setBounds(12, 181, 84, 30);
+		insertPanel.add(genderLabel);
 		
-		JRadioButton sexMan = new JRadioButton("\uB0A8");
-		sexMan.setBounds(113, 185, 49, 23);
-		insertPanel.add(sexMan);
+		JRadioButton genderMan = new JRadioButton("\uB0A8");
+		genderMan.setBounds(113, 185, 49, 23);
+		insertPanel.add(genderMan);
 		
-		JRadioButton sexWoman = new JRadioButton("\uC5EC");
-		sexWoman.setBounds(166, 185, 39, 23);
-		insertPanel.add(sexWoman);
+		JRadioButton genderWoman = new JRadioButton("\uC5EC");
+		genderWoman.setBounds(166, 185, 39, 23);
+		insertPanel.add(genderWoman);
 		
 		JLabel phoneLabel = new JLabel("\uC5F0\uB77D\uCC98 : ");
 		phoneLabel.setBounds(324, 181, 84, 30);
@@ -112,11 +112,11 @@ public class Pages {
 		insertPanel.add(txtPhone);
 		
 		JLabel workLabel = new JLabel("\uBD80\uC11C : ");
-		workLabel.setBounds(12, 277, 84, 30);
+		workLabel.setBounds(12, 250, 84, 30);
 		insertPanel.add(workLabel);
 		
 		JLabel jobLabel = new JLabel("\uC9C1\uCC45 : ");
-		jobLabel.setBounds(324, 277, 84, 30);
+		jobLabel.setBounds(324, 250, 84, 30);
 		insertPanel.add(jobLabel);
 		
 		JLabel gradeLabel = new JLabel("\uB4F1\uAE09 : ");
@@ -188,9 +188,9 @@ public class Pages {
 		btnInsert.setBounds(12, 210, 126, 50);
 		btnPanel.add(btnInsert);
 		
-		ButtonGroup btnSex = new ButtonGroup();
-		btnSex.add(sexMan);
-		btnSex.add(sexWoman);
+		ButtonGroup btnGender = new ButtonGroup();
+		btnGender.add(genderMan);
+		btnGender.add(genderWoman);
 		
 		ButtonGroup btnGrade = new ButtonGroup();
 		btnGrade.add(gradeS);	
