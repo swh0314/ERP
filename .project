@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>image/home.jpg</name>
+			<type>1</type>
+			<location>C:/Users/HOME/Downloads/home.jpg</location>
+		</link>
+	</linkedResources>
 </projectDescription>

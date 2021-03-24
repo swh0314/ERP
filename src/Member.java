@@ -47,10 +47,10 @@ public class Member {
 					+ "member(id int NOT NULL AUTO_INCREMENT,"
 					+ "name varChar(15), "
 					+ "birth varChar(10), "
-					+ "gender varChar(2), "
+					+ "gender varChar(10), "
 					+ "phone varChar(15), "
 					+ "work varChar(20),"
-					+ "job varChar(10),"
+					+ "job varChar(20),"
 					+ "grade varChar(2),"
 					+ "joinday varChar(10),"
 					+ "PRIMARY KEY(id))" ); //sql에 명령어 전달, PRIMARY KEY(id) id가 sql의 key value임 (id = null 절대 안됨)
@@ -63,19 +63,27 @@ public class Member {
 		}
 	}
 	
-	public static ArrayList<String> getMembers(){
+	public static String[][] getMembers(){
 		try { //sql의 commed를해서 data를 불러옴
 			Connection con = getConnection();
-			PreparedStatement statement = con.prepareStatement("Select name, birth, gender, phone FROM member");
+			PreparedStatement statement = con.prepareStatement("Select name, birth, gender, phone, work, job, grade, joinday FROM member");
 			ResultSet results = statement.executeQuery(); //query를 불러오기
-			ArrayList<String> list = new ArrayList<String>();
+			ArrayList<String[]> list = new ArrayList<String[]>();
 			while(results.next()) {
-				list.add("Name :" + results.getString("name") + ", Birth :" + results.getString("birth") +
-						 ", Gender :" + results.getString("gender") + ", Phone :" + results.getString("phone"));
+				list.add(new String[] {
+						results.getString("name"),
+						results.getString("birth"),
+						results.getString("gender"),
+						results.getString("phone"),
+						results.getString("work"),
+						results.getString("job"),
+						results.getString("grade"),
+						results.getString("joinday")
+				});
 			}
-			
 			System.out.println("The data has been fetched!");
-			return list;
+			String[][] arr = new String[list.size()][8];
+			return list.toArray(arr);
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 			return null;	
@@ -85,9 +93,5 @@ public class Member {
 //	public static void main(String[] args) {
 //		createTable();
 //		createMember("song", "981102", "w", "01012345678", "lotte", "engineer", "S", "210402");
-//		ArrayList<String> list = getMembers();
-//		for(String item: list) {
-//			System.out.println(item);
-//		}
 //	}
 }

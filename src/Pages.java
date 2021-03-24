@@ -1,25 +1,36 @@
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.Arrays;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import java.awt.FlowLayout;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.JComboBox;
-import java.awt.Color;
 import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.RowFilter;
+import javax.swing.SwingConstants;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 public class Pages {
 
+	private static final Graphics Graphics = null;
 	private JFrame frame;
 	private final JLayeredPane layeredPane = new JLayeredPane();
 	private JTextField txtName;
@@ -28,8 +39,8 @@ public class Pages {
 	private JTable infoTable;
 	private JTextField txtSearch;
 	private JTextField txtJoinday;
-	private JTextField textField;
-	private JPasswordField passwordField;
+	private JTextField idField;
+	private JPasswordField passField;
 
 	/**
 	 * Launch the application.
@@ -57,7 +68,9 @@ public class Pages {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize() {	
+		Member member = new Member();
+
 		frame = new JFrame();
 		frame.setBounds(100, 100, 902, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,10 +81,16 @@ public class Pages {
 		layeredPane.setBounds(0, 0, 888, 663);
 		frame.getContentPane().add(layeredPane);
 		
+		JPanel btnPanel = new JPanel();
+		btnPanel.setBounds(0, 0, 150, 663);
+		btnPanel.setLayout(null);
+		btnPanel.setVisible(false);
+		
 		JPanel homePanel = new JPanel();
 		homePanel.setBounds(0, 0, 888, 663);
-		layeredPane.add(homePanel);
 		homePanel.setLayout(null);
+		homePanel.setVisible(true);
+		layeredPane.add(homePanel);
 		
 		JLabel lblNewLabel = new JLabel("\uC778\uC0AC \uAD00\uB9AC \uD504\uB85C\uADF8\uB7A8");
 		lblNewLabel.setFont(new Font("HY엽서M", Font.BOLD, 70));
@@ -79,31 +98,53 @@ public class Pages {
 		lblNewLabel.setBounds(115, 100, 650, 200);
 		homePanel.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setBounds(261, 346, 50, 15);
-		homePanel.add(lblNewLabel_1);
+		JLabel idLabel = new JLabel("ID");
+		idLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
+		idLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		idLabel.setBounds(260, 350, 90, 30);
+		homePanel.add(idLabel);
 		
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setBounds(261, 409, 50, 15);
-		homePanel.add(lblNewLabel_2);
+		JLabel passLabel = new JLabel("PassWord");
+		passLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
+		passLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		passLabel.setBounds(220, 410, 130, 30);
+		homePanel.add(passLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(412, 343, 7, 21);
-		homePanel.add(textField);
-		textField.setColumns(10);
+		idField = new JTextField();
+		idField.setBounds(370, 350, 150, 30);
+		homePanel.add(idField);
+		idField.setColumns(10);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(412, 406, 7, 21);
-		homePanel.add(passwordField);
+		passField = new JPasswordField();
+		passField.setBounds(370, 410, 150, 30);
+		homePanel.add(passField);
 		
-		JLabel lblNewLabel_3 = new JLabel("New label");
-		lblNewLabel_3.setBounds(390, 499, 50, 15);
-		homePanel.add(lblNewLabel_3);
+		JButton btnLoggin = new JButton("LOG IN");
+		btnLoggin.setFont(new Font("Dialog", Font.PLAIN, 30));
+		btnLoggin.setHorizontalAlignment(SwingConstants.CENTER);
+		btnLoggin.setBounds(260, 481, 338, 42);
+		homePanel.add(btnLoggin);
 		
+		layeredPane.add(btnPanel);
+		
+		JButton btnList = new JButton("List");
+		btnList.setBounds(12, 125, 125, 50);
+		btnPanel.add(btnList);
+		
+		JButton btnInsert = new JButton("Insert");
+		btnInsert.setBounds(12, 200, 125, 50);
+		btnPanel.add(btnInsert);
+		
+		JButton btnHome = new JButton("Home");
+		btnHome.setBounds(12, 278, 125, 50);
+		btnPanel.add(btnHome);
+			
+
 		JPanel insertPanel = new JPanel();
 		insertPanel.setBounds(150, 0, 735, 663);
-		layeredPane.add(insertPanel);
 		insertPanel.setLayout(null);
+		insertPanel.setVisible(false);
+		layeredPane.add(insertPanel);
 		
 		JLabel infoLabel = new JLabel("\uC778\uC0AC \uB4F1\uB85D");
 		infoLabel.setFont(new Font("HY그래픽M", Font.PLAIN, 30));
@@ -136,11 +177,12 @@ public class Pages {
 		genderLabel.setHorizontalAlignment(JLabel.CENTER);
 		insertPanel.add(genderLabel);
 		
-		JRadioButton genderMan = new JRadioButton("\uB0A8");
+		JRadioButton genderMan = new JRadioButton("Male");
+		genderMan.setSelected(true);
 		genderMan.setBounds(113, 180, 49, 30);
 		insertPanel.add(genderMan);
 		
-		JRadioButton genderWoman = new JRadioButton("\uC5EC");
+		JRadioButton genderWoman = new JRadioButton("Female");
 		genderWoman.setBounds(165, 180, 50, 30);
 		insertPanel.add(genderWoman);
 		
@@ -202,17 +244,14 @@ public class Pages {
 		btnGender.add(genderWoman);
 		
 		ButtonGroup btnGrade = new ButtonGroup();
-		btnGrade.add(gradeS);	
-		btnGrade.add(gradeA);
-		btnGrade.add(gradeB);	
-		btnGrade.add(gradeC);
-		btnGrade.add(gradeD);	
-		btnGrade.add(gradeF);
+		btnGrade.add(gradeS);	btnGrade.add(gradeA);
+		btnGrade.add(gradeB);	btnGrade.add(gradeC);
+		btnGrade.add(gradeD);	btnGrade.add(gradeF);
 		
-		JComboBox comboxWork = new JComboBox(new String[] {"Account", "R&D", "H&R", "Sales", "Marketing", "Manufacture"});
-		comboxWork.setBackground(Color.WHITE);
-		comboxWork.setBounds(113, 260, 150, 30);
-		insertPanel.add(comboxWork);
+		JComboBox comboWork = new JComboBox(new String[] {"Account", "R&D", "H&R", "Sales", "Marketing", "Manufacture"});
+		comboWork.setBackground(Color.WHITE);
+		comboWork.setBounds(113, 260, 150, 30);
+		insertPanel.add(comboWork);
 		
 		JComboBox comboJob = new JComboBox(new String[] {"chief leader","leader", "follower", "part-time"});
 		comboJob.setBackground(Color.WHITE);
@@ -235,53 +274,94 @@ public class Pages {
 			public void actionPerformed(ActionEvent e) {
 				String name = txtName.getText();
 				String birth = txtBirth.getText();
-				
+				String gender = null;
 				String phone = txtPhone.getText();
-				
-				
-				
+				String grade = "-";
+				String work = comboWork.getSelectedItem().toString();
+				String job = comboJob.getSelectedItem().toString();
 				String joinday = txtJoinday.getText();
+				
+				if(genderMan.isSelected()) {
+					gender = "Male";
+				} else if(genderWoman.isSelected()) {
+					gender = "Female";
+				}
+				
+				if(gradeS.isSelected()) {
+					grade = "S";
+				} else if(gradeA.isSelected()){
+					grade = "A";
+				} else if(gradeB.isSelected()) {
+					grade = "B";
+				} else if(gradeC.isSelected()) {
+					grade = "C";
+				} else if(gradeD.isSelected()) {
+					grade = "D";
+				} else if(gradeF.isSelected()) {
+					grade = "F";
+				}
+				
+				member.createMember(name, birth, gender, phone, work, job, grade, joinday);
+				JOptionPane.showMessageDialog(null, "등록을 완료했습니다.");
 			}
 			
 		});
 		
 		JPanel listPanel = new JPanel();
 		listPanel.setBounds(150, 0, 735, 663);
-		layeredPane.add(listPanel);
 		listPanel.setLayout(null);
+		listPanel.setVisible(false);
+		layeredPane.add(listPanel);
 		
 		JLabel infoLabel2 = new JLabel("\uC778\uC0AC \uBAA9\uB85D");
 		infoLabel2.setBounds(130, 10, 450, 35);
 		infoLabel2.setHorizontalAlignment(JLabel.CENTER);
 		listPanel.add(infoLabel2);
 		
-		infoTable = new JTable();
+		String[] headers = new String[] {"Name", "Birth", "Gender", "Phone", "Work", "Job", "Grade", "JoinDay"};
+		String[][] data = Member.getMembers(); 
+		
+		infoTable = new JTable(data, headers);
 		infoTable.setBounds(30, 100, 690, 540);
-		listPanel.add(infoTable);
+		infoTable.setRowHeight(30);
+		infoTable.setAlignmentX(0);
+		infoTable.setPreferredScrollableViewportSize(new Dimension(690, 540));
+		
+//		listPanel.add(infoTable);
+		JScrollPane scrollPane = new JScrollPane(infoTable);
+		scrollPane.setBounds(30, 100, 690, 540);
+		listPanel.add(scrollPane);
 		
 		txtSearch = new JTextField();
-		txtSearch.setBounds(30, 60, 630, 30);
+		txtSearch.setBounds(30, 60, 720, 30);
 		txtSearch.setColumns(10);
 		txtSearch.setHorizontalAlignment(JTextField.CENTER);
 		listPanel.add(txtSearch);
 		
-		JLabel btnSearch = new JLabel("search");
-		btnSearch.setHorizontalAlignment(SwingConstants.CENTER);
-		btnSearch.setBounds(660, 60, 60, 30);
-		listPanel.add(btnSearch);
+		txtSearch.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent e) {
+				String value= txtSearch.getText();
+				TableRowSorter<TableModel> trs = new TableRowSorter<TableModel> (infoTable.getModel());
+				infoTable.setRowSorter(trs);
+				trs.setRowFilter(RowFilter.regexFilter(value));
+			}
+		});
 		
-		JPanel btnPanel = new JPanel();
-		btnPanel.setBounds(0, 0, 150, 663);
-		layeredPane.add(btnPanel);
-		btnPanel.setLayout(null);
-		
-		JButton btnList = new JButton("List");
-		btnList.setBounds(12, 125, 125, 50);
-		btnPanel.add(btnList);
-		
-		JButton btnInsert = new JButton("Insert");
-		btnInsert.setBounds(12, 200, 125, 50);
-		btnPanel.add(btnInsert);
+		//table의 column을 설정
+		TableColumnModel columnModels = infoTable.getColumnModel();
+		columnModels.getColumn(6).setPreferredWidth(20);
+
+		btnLoggin.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(idField.getText().equals("Admin") && Arrays.equals(passField.getPassword(), new char[] {'1', '2', '3', '4'})) {
+					homePanel.setVisible(false);
+					listPanel.setVisible(true);
+					btnPanel.setVisible(true);
+				}
+			}	
+		});
 		
 		btnList.addActionListener(new ActionListener() {
 
@@ -289,8 +369,9 @@ public class Pages {
 			public void actionPerformed(ActionEvent e) {
 				insertPanel.setVisible(false);
 				listPanel.setVisible(true);
+				homePanel.setVisible(false);
+				
 			}
-			
 		});
 		
 		btnInsert.addActionListener(new ActionListener() {
@@ -299,9 +380,24 @@ public class Pages {
 			public void actionPerformed(ActionEvent e) {
 				listPanel.setVisible(false);
 				insertPanel.setVisible(true);
+				homePanel.setVisible(false);
+			}
+			
+		});
+
+		btnHome.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnPanel.setVisible(false);
+				homePanel.setVisible(true);
+				listPanel.setVisible(false);
+				insertPanel.setVisible(false);
 			}
 			
 		});
 		
+		
 	}
+
 }
