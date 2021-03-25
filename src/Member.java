@@ -4,6 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
+
 public class Member {
 	
 	public static Connection getConnection() {
@@ -40,8 +43,7 @@ public class Member {
 	
 	public static void createTable() {
 		try {
-			Connection con = getConnection(); //sql과 연결
-			
+			Connection con = getConnection(); //sql과 연결		
 			PreparedStatement createTable = con.prepareStatement(
 					"CREATE TABLE IF NOT EXISTS "
 					+ "member(id int NOT NULL AUTO_INCREMENT,"
@@ -89,6 +91,7 @@ public class Member {
 			return null;	
 		}
 	}
+
 	
 //	public static void main(String[] args) {
 //		createTable();

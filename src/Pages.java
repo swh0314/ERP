@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.Arrays;
 
 import javax.swing.ButtonGroup;
@@ -82,7 +84,7 @@ public class Pages {
 		frame.getContentPane().add(layeredPane);
 		
 		JPanel btnPanel = new JPanel();
-		btnPanel.setBounds(0, 0, 150, 663);
+		btnPanel.setBounds(0, 0, 140, 663);
 		btnPanel.setLayout(null);
 		btnPanel.setVisible(false);
 		
@@ -136,8 +138,12 @@ public class Pages {
 		btnPanel.add(btnInsert);
 		
 		JButton btnHome = new JButton("Home");
-		btnHome.setBounds(12, 278, 125, 50);
+		btnHome.setBounds(12, 350, 125, 50);
 		btnPanel.add(btnHome);
+		
+		JButton btnDelete = new JButton("Delete");
+		btnDelete.setBounds(12, 275, 125, 50);
+		btnPanel.add(btnDelete);
 			
 
 		JPanel insertPanel = new JPanel();
@@ -179,11 +185,11 @@ public class Pages {
 		
 		JRadioButton genderMan = new JRadioButton("Male");
 		genderMan.setSelected(true);
-		genderMan.setBounds(113, 180, 49, 30);
+		genderMan.setBounds(113, 180, 80, 30);
 		insertPanel.add(genderMan);
 		
 		JRadioButton genderWoman = new JRadioButton("Female");
-		genderWoman.setBounds(165, 180, 50, 30);
+		genderWoman.setBounds(193, 180, 80, 30);
 		insertPanel.add(genderWoman);
 		
 		JLabel phoneLabel = new JLabel("\uC5F0\uB77D\uCC98 : ");
@@ -303,6 +309,7 @@ public class Pages {
 				
 				member.createMember(name, birth, gender, phone, work, job, grade, joinday);
 				JOptionPane.showMessageDialog(null, "등록을 완료했습니다.");
+
 			}
 			
 		});
@@ -324,7 +331,6 @@ public class Pages {
 		infoTable = new JTable(data, headers);
 		infoTable.setBounds(30, 100, 690, 540);
 		infoTable.setRowHeight(30);
-		infoTable.setAlignmentX(0);
 		infoTable.setPreferredScrollableViewportSize(new Dimension(690, 540));
 		
 //		listPanel.add(infoTable);
@@ -333,7 +339,7 @@ public class Pages {
 		listPanel.add(scrollPane);
 		
 		txtSearch = new JTextField();
-		txtSearch.setBounds(30, 60, 720, 30);
+		txtSearch.setBounds(30, 60, 700, 30);
 		txtSearch.setColumns(10);
 		txtSearch.setHorizontalAlignment(JTextField.CENTER);
 		listPanel.add(txtSearch);
@@ -371,6 +377,9 @@ public class Pages {
 				listPanel.setVisible(true);
 				homePanel.setVisible(false);
 				
+				//data를 새롭게 얻어온 뒤 JTable에 적용
+				String[][] data = Member.getMembers(); 
+				infoTable.setModel(new JTable(data, headers).getModel());
 			}
 		});
 		
@@ -397,7 +406,40 @@ public class Pages {
 			
 		});
 		
-		
-	}
+		btnDelete.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Connection con = Member.getConnection();
+					int row = infoTable.getSelectedRow();
+					String dName = infoTable.getModel().getValueAt(row, 0).toString();
+					String dBirth = infoTable.getModel().getValueAt(row, 1).toString();
+					String dGender = infoTable.getModel().getValueAt(row, 2).toString();
+					String dPhone = infoTable.getModel().getValueAt(row, 3).toString();
+					String dWork = infoTable.getModel().getValueAt(row, 4).toString();
+					String dJob = infoTable.getModel().getValueAt(row, 5).toString();
+					String dGrade = infoTable.getModel().getValueAt(row, 6).toString();
+					String dJoinday = infoTable.getModel().getValueAt(row, 7).toString();
+					PreparedStatement statement = con.prepareStatement(
+							"DELETE FROM members WHERE "
+							+ "name='"+dName+"' AND "
+							+ "birht='"+dBirth+"' AND "
+							+ "gender='"+dGender+"' AND "
+							+ "phone='"+dPhone+"' AND "
+							+ "work='"+dWork+"' AND "
+							+ "job='"+dJob+"' AND "
+							+ "grade='"+dGrade+"' AND "
+							+ "joinday='"+dJoinday+"'");
+					statement.executeUpdate();
+					
+					
+					JOptionPane.showMessageDialog(null, "The data has been deleted successfully.");
+				} catch(Exception e1){
+					System.out.println(e1.getMessage());
+				}
+			}
+			
+		});
+	}
 }
